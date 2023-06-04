@@ -21,6 +21,7 @@ import {
 export const RegistrationScreen = () => {
   const [imageSource, setImageSource] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   const screenHeight = Dimensions.get("window").height;
 
@@ -28,6 +29,19 @@ export const RegistrationScreen = () => {
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
     "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
   });
+
+ 
+
+  const keyboardDidShow = () => {
+    setIsKeyboardOpen(true);
+  };
+
+  const keyboardDidHide = () => {
+    setIsKeyboardOpen(false);
+  };
+
+  Keyboard.addListener("keyboardDidShow", keyboardDidShow);
+  Keyboard.addListener("keyboardDidHide", keyboardDidHide);
 
   if (!fontsLoaded) {
     return null;
@@ -39,9 +53,8 @@ export const RegistrationScreen = () => {
 
   return (
     <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "null"}
-          keyboardVerticalOffset={20} 
-        //   keyboardShouldPersistTaps="handled"
+          behavior={Platform.OS === "ios" ? "padding" : null}
+          keyboardVerticalOffset={-260} 
       style={styles.container}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -65,7 +78,7 @@ export const RegistrationScreen = () => {
             keyboardType="default"
             autoCapitalize="none"
             autoCompleteType="username"
-            //   autoFocus={true}
+              autoFocus={true}
           />
           <TextInput
             style={styles.input}
@@ -73,7 +86,7 @@ export const RegistrationScreen = () => {
             keyboardType="email-address"
             autoCapitalize="none"
             autoCompleteType="email"
-            //   autoFocus={true}
+              autoFocus={true}
           />
           <View style={styles.inputWraper}>
             <TextInput
@@ -90,12 +103,15 @@ export const RegistrationScreen = () => {
               </Text>
             </TouchableOpacity>
           </View>
+          {!isKeyboardOpen && (
+            <>
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>Зареєструватися</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}}>
             <Text style={styles.link}>Вже є акаунт? Увійти</Text>
           </TouchableOpacity>
+          </>)}
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -123,24 +139,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
   },
-  //   container: {
-  //     // flex: 1,
-  //     width: "100%",
-  //     alignItems: "center",
-  //     justifyContent: "center",
-  //     padding: 20,
-  //     borderRadius: 25,
-  //     borderBottomLeftRadius: 0,
-  //     borderBottomRightRadius: 0,
-  //     // alignSelf: "strech",
-  //     justifyContent: "center",
-  //     backgroundColor: "#fff",
-  //     position: "absolute",
-  //     bottom: 0,
-  //     left: 0,
-  //     right: 0,
-  //     height: "66.66%",
-  //   },
+
   registrationText: {
     fontWeight: "bold",
     marginBottom: 32,
@@ -225,17 +224,3 @@ Font.loadAsync({
   "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
   "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
 });
-
-// const [imageSource, setImageSource] = useState(null);
-// {imageSource ? (
-//         <Image source={imageSource} style={styles.profileImage} />
-//       ) : (
-//         <TouchableOpacity onPress={handleImageUpload}>
-//           <Image source={require('./assets/plus.png')} style={styles.plusIcon} />
-//         </TouchableOpacity>
-//       )}
-
-//  const handleImageUpload = () => {
-//     // Додайте код для завантаження фото тут
-//     // Після завантаження фото оновіть значення imageSource
-//   };

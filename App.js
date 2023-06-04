@@ -1,19 +1,10 @@
 // import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, View, Image } from 'react-native';
+import {  StyleSheet, View, Image } from 'react-native';
 import { RegistrationScreen } from './src/screens/RegistrationScreen';
-import { useFonts } from 'expo-font';
-import * as Font from 'expo-font';
+import {LoginScreen} from './src/screens/LoginScreen'
 
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    'Roboto-Bold': require('./src/assets/fonts/Roboto-Bold.ttf'),
-    'Roboto-Regular': require('./src/assets/fonts/Roboto-Regular.ttf')
-  })
-
-  if (!fontsLoaded) {
-    return null;
-  }
 
   return (
     <View style={styles.container}>
@@ -21,7 +12,8 @@ export default function App() {
         source={require("./src/assets/images/PhotoBG.png")}
         style={styles.backgroundImage}
       />
-      <RegistrationScreen/>
+      {/* <RegistrationScreen/> */}
+      <LoginScreen/>
     </View>
   );
 }
@@ -40,10 +32,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: "relative"
   },
-  // height: Platform.OS === 'ios' ? 50 : 100
 });
-
-// Font.loadAsync({
-//   'Roboto-Bold': require('./src/assets/fonts/Roboto-Bold.ttf'),
-//   'Roboto-Regular': require('./src/assets/fonts/Roboto-Regular.ttf')
-// });
