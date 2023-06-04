@@ -22,6 +22,9 @@ export const RegistrationScreen = () => {
   const [imageSource, setImageSource] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [emailFocused, setEmailFocused] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const [loginFocused, setloginFocused] = useState(false);
 
   const screenHeight = Dimensions.get("window").height;
 
@@ -73,26 +76,32 @@ export const RegistrationScreen = () => {
           </View>
           <Text style={styles.registrationText}>Реєстрація</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, loginFocused && styles.inputFocused]}
             placeholder="Логін"
             keyboardType="default"
             autoCapitalize="none"
             autoCompleteType="username"
               autoFocus={true}
+              onFocus={() => setloginFocused(true)}
+            onBlur={() => setloginFocused(false)} 
           />
           <TextInput
-            style={styles.input}
+            style={[styles.input, emailFocused && styles.inputFocused]}
             placeholder="Електронна пошта"
             keyboardType="email-address"
             autoCapitalize="none"
             autoCompleteType="email"
               autoFocus={true}
+              onFocus={() => setEmailFocused(true)}
+            onBlur={() => setEmailFocused(false)} 
           />
           <View style={styles.inputWraper}>
-            <TextInput
-              style={styles.input}
+          <TextInput
+              style={[styles.input, passwordFocused && styles.inputFocused]}
               placeholder="Пароль"
               secureTextEntry={!showPassword}
+              onFocus={() => setPasswordFocused(true)}
+            onBlur={() => setPasswordFocused(false)}
             />
             <TouchableOpacity
               style={styles.showPasswordButton}
@@ -159,7 +168,9 @@ const styles = StyleSheet.create({
     inputWraper: {
       width: "100%",
 position: 'relative',
-
+  },
+  inputFocused: {
+    borderColor: "#FF6C00",
   },
   link: {
     color: "#1B4371",
