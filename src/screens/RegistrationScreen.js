@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PlusIcon } from "../assets/svg/svg";
 import { useFonts } from "expo-font";
 import * as Font from "expo-font";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
   View,
   TextInput,
@@ -26,12 +26,12 @@ export const RegistrationScreen = () => {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [loginFocused, setloginFocused] = useState(false);
   const [loginValue, setLoginValue] = useState("");
-const [emailValue, setEmailValue] = useState("");
-const [passwordValue, setPasswordValue] = useState("");
+  const [emailValue, setEmailValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
 
   const screenHeight = Dimensions.get("window").height;
 
-   const [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
     "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
   });
@@ -42,8 +42,8 @@ const [passwordValue, setPasswordValue] = useState("");
     console.log("Пароль:", passwordValue);
 
     setLoginValue("");
-  setEmailValue("");
-  setPasswordValue("");
+    setEmailValue("");
+    setPasswordValue("");
   };
 
   const keyboardDidShow = () => {
@@ -67,8 +67,8 @@ const [passwordValue, setPasswordValue] = useState("");
 
   return (
     <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : null}
-          keyboardVerticalOffset={-260} 
+      behavior={Platform.OS === "ios" ? "padding" : null}
+      keyboardVerticalOffset={-260}
       style={styles.container}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -87,58 +87,62 @@ const [passwordValue, setPasswordValue] = useState("");
           </View>
           <Text style={styles.registrationText}>Реєстрація</Text>
           <View style={styles.form}>
-          <TextInput
-            style={[styles.input, loginFocused && styles.inputFocused]}
-            placeholder="Логін"
-            value={loginValue}
-            onChangeText={setLoginValue}
-            keyboardType="default"
-            autoCapitalize="none"
-            autoCompleteType="username"
+            <TextInput
+              style={[styles.input, loginFocused && styles.inputFocused]}
+              placeholder="Логін"
+              value={loginValue}
+              onChangeText={setLoginValue}
+              keyboardType="default"
+              autoCapitalize="none"
+              autoCompleteType="username"
               autoFocus={true}
               onFocus={() => setloginFocused(true)}
-            onBlur={() => setloginFocused(false)} 
-          />
-          <TextInput
-            style={[styles.input, emailFocused && styles.inputFocused]}
-            placeholder="Електронна пошта"
-            value={emailValue}
-            onChangeText={setEmailValue}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCompleteType="email"
+              onBlur={() => setloginFocused(false)}
+            />
+            <TextInput
+              style={[styles.input, emailFocused && styles.inputFocused]}
+              placeholder="Електронна пошта"
+              value={emailValue}
+              onChangeText={setEmailValue}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCompleteType="email"
               autoFocus={true}
               onFocus={() => setEmailFocused(true)}
-            onBlur={() => setEmailFocused(false)} 
-          />
-          <View style={styles.inputWraper}>
-          <TextInput
-              style={[styles.input, passwordFocused && styles.inputFocused]}
-              placeholder="Пароль"
-              value={passwordValue}
-              onChangeText={setPasswordValue}
-              secureTextEntry={!showPassword}
-              onFocus={() => setPasswordFocused(true)}
-            onBlur={() => setPasswordFocused(false)}
+              onBlur={() => setEmailFocused(false)}
             />
-            <TouchableOpacity
-              style={styles.showPasswordButton}
-              onPress={() => setShowPassword(!showPassword)}
-            >
-              <Text style={styles.showPasswordButtonText}>
-                {showPassword ? "Сховати" : "Показати"}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          {!isKeyboardOpen && (
-            <>
-          <TouchableOpacity style={styles.button} onPress={handleRegistration}>
-            <Text style={styles.buttonText}>Зареєструватися</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
-            <Text style={styles.link}>Вже є акаунт? Увійти</Text>
-          </TouchableOpacity>
-          </>)}
+            <View style={styles.inputWraper}>
+              <TextInput
+                style={[styles.input, passwordFocused && styles.inputFocused]}
+                placeholder="Пароль"
+                value={passwordValue}
+                onChangeText={setPasswordValue}
+                secureTextEntry={!showPassword}
+                onFocus={() => setPasswordFocused(true)}
+                onBlur={() => setPasswordFocused(false)}
+              />
+              <TouchableOpacity
+                style={styles.showPasswordButton}
+                onPress={() => setShowPassword(!showPassword)}
+              >
+                <Text style={styles.showPasswordButtonText}>
+                  {showPassword ? "Сховати" : "Показати"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {!isKeyboardOpen && (
+              <>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleRegistration}
+                >
+                  <Text style={styles.buttonText}>Зареєструватися</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {}}>
+                  <Text style={styles.link}>Вже є акаунт? Увійти</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -160,8 +164,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     left: 0,
-        right: 0,
-    fontFamily: 'Roboto-Regular',
+    right: 0,
+    fontFamily: "Roboto-Regular",
   },
   innerContainer: {
     width: "100%",
@@ -174,7 +178,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Bold",
     fontSize: 36,
   },
-  form:{
+  form: {
     width: "100%",
     alignItems: "center",
   },
@@ -187,10 +191,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 16,
     fontSize: 16,
-    },
-    inputWraper: {
-      width: "100%",
-position: 'relative',
+  },
+  inputWraper: {
+    width: "100%",
+    position: "relative",
   },
   inputFocused: {
     borderColor: "#FF6C00",
