@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { PlusIcon } from "../assets/svg/svg";
 import { useFonts } from "expo-font";
 import * as Font from "expo-font";
 
 import {
   View,
   TextInput,
-  Button,
   Text,
   TouchableOpacity,
   KeyboardAvoidingView,
