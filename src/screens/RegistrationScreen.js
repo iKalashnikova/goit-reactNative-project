@@ -25,6 +25,9 @@ export const RegistrationScreen = () => {
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [loginFocused, setloginFocused] = useState(false);
+  const [loginValue, setLoginValue] = useState("");
+const [emailValue, setEmailValue] = useState("");
+const [passwordValue, setPasswordValue] = useState("");
 
   const screenHeight = Dimensions.get("window").height;
 
@@ -33,7 +36,15 @@ export const RegistrationScreen = () => {
     "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
   });
 
- 
+  const handleRegistration = () => {
+    console.log("Логін:", loginValue);
+    console.log("Електронна пошта:", emailValue);
+    console.log("Пароль:", passwordValue);
+
+    setLoginValue("");
+  setEmailValue("");
+  setPasswordValue("");
+  };
 
   const keyboardDidShow = () => {
     setIsKeyboardOpen(true);
@@ -75,9 +86,12 @@ export const RegistrationScreen = () => {
             </TouchableOpacity>
           </View>
           <Text style={styles.registrationText}>Реєстрація</Text>
+          <View style={styles.form}>
           <TextInput
             style={[styles.input, loginFocused && styles.inputFocused]}
             placeholder="Логін"
+            value={loginValue}
+            onChangeText={setLoginValue}
             keyboardType="default"
             autoCapitalize="none"
             autoCompleteType="username"
@@ -88,6 +102,8 @@ export const RegistrationScreen = () => {
           <TextInput
             style={[styles.input, emailFocused && styles.inputFocused]}
             placeholder="Електронна пошта"
+            value={emailValue}
+            onChangeText={setEmailValue}
             keyboardType="email-address"
             autoCapitalize="none"
             autoCompleteType="email"
@@ -99,6 +115,8 @@ export const RegistrationScreen = () => {
           <TextInput
               style={[styles.input, passwordFocused && styles.inputFocused]}
               placeholder="Пароль"
+              value={passwordValue}
+              onChangeText={setPasswordValue}
               secureTextEntry={!showPassword}
               onFocus={() => setPasswordFocused(true)}
             onBlur={() => setPasswordFocused(false)}
@@ -114,13 +132,14 @@ export const RegistrationScreen = () => {
           </View>
           {!isKeyboardOpen && (
             <>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleRegistration}>
             <Text style={styles.buttonText}>Зареєструватися</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}}>
             <Text style={styles.link}>Вже є акаунт? Увійти</Text>
           </TouchableOpacity>
           </>)}
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -154,6 +173,10 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     fontFamily: "Roboto-Bold",
     fontSize: 36,
+  },
+  form:{
+    width: "100%",
+    alignItems: "center",
   },
   input: {
     width: "100%",
