@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { PlusIcon } from "../assets/svg/svg";
 import { useFonts } from "expo-font";
-import * as Font from "expo-font";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+// import * as Font from "expo-font";
+import * as SplashScreen from 'expo-splash-screen';
 import {
   View,
   TextInput,
@@ -17,6 +17,8 @@ import {
   Keyboard,
   Dimensions,
 } from "react-native";
+
+SplashScreen.preventAutoHideAsync();
 
 export const RegistrationScreen = () => {
   const [imageSource, setImageSource] = useState(null);
@@ -34,8 +36,15 @@ export const RegistrationScreen = () => {
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
     "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
+    "Roboto-Medium":require("../assets/fonts/Roboto-Medium.ttf"),
   });
 
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+  
   const handleRegistration = () => {
     console.log("Логін:", loginValue);
     console.log("Електронна пошта:", emailValue);
@@ -66,15 +75,23 @@ export const RegistrationScreen = () => {
   //   };
 
   return (
+    <View style={styles.containerBack}>
+    <Image
+      source={require("../assets/images/PhotoBG.png")}
+      style={styles.backgroundImage}
+    />
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : null}
       keyboardVerticalOffset={-260}
       style={styles.container}
+      onLayout={onLayoutRootView}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View
           style={[styles.innerContainer, { height: (screenHeight * 2) / 3 }]}
+          
         >
+        
           <View style={styles.profileImageContainer}>
             <Image source={imageSource} style={styles.profileImage} />
             <TouchableOpacity
@@ -145,14 +162,31 @@ export const RegistrationScreen = () => {
             )}
           </View>
         </View>
+      
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
+  
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    // justifyContent: "center",
+  },
+  containerBack: {
+    flex: 1,
+    alignItems: "center",
+    position: "relative",
+  },
   container: {
     //   flex: 1,
+    
     width: "100%",
     alignItems: "center",
     justifyContent: "space-around",
@@ -162,6 +196,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
     backgroundColor: "#fff",
     position: "absolute",
+    // position: "relative",
     bottom: 0,
     left: 0,
     right: 0,
@@ -258,7 +293,3 @@ const styles = StyleSheet.create({
   },
 });
 
-Font.loadAsync({
-  "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
-  "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
-});
