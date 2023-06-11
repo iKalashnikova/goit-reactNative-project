@@ -55,6 +55,11 @@ export const LoginScreen = () => {
   }
 
   return (
+    <View style={styles.containerBack}>
+    <Image
+      source={require("../assets/images/PhotoBG.png")}
+      style={styles.backgroundImage}
+    />
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : null}
       keyboardVerticalOffset={-300}
@@ -114,12 +119,28 @@ export const LoginScreen = () => {
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
+
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    // justifyContent: "center",
+  },
+  containerBack: {
+    flex: 1,
+    alignItems: "center",
+    position: "relative",
+  },
   container: {
     //   flex: 1,
+    
     width: "100%",
     alignItems: "center",
     justifyContent: "space-around",
