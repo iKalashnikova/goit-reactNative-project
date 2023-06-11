@@ -12,10 +12,10 @@ const MainStack = createStackNavigator();
 export default function App() {
   return (
       <NavigationContainer>
-        <MainStack.Navigator initialRouteName="Registration" screenOptions={{ headerShown: false }}>
+        <MainStack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
           <MainStack.Screen name="Registration" component={RegistrationScreen} />
           <MainStack.Screen name="Login" component={LoginScreen} /> 
-          {/* <PostScreen/> */}
+          <MainStack.Screen name="Home" component={PostScreen} /> 
         </MainStack.Navigator>
       </NavigationContainer>
 

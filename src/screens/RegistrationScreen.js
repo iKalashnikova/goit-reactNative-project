@@ -1,8 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { PlusIcon } from "../assets/svg/svg";
+import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 // import * as Font from "expo-font";
 import * as SplashScreen from 'expo-splash-screen';
+import { PlusIcon } from "../assets/svg/svg";
+import Svg, { Circle } from "react-native-svg";
 import {
   View,
   TextInput,
@@ -17,6 +19,7 @@ import {
   Keyboard,
   Dimensions,
 } from "react-native";
+
 
 SplashScreen.preventAutoHideAsync();
 
@@ -74,8 +77,11 @@ export const RegistrationScreen = () => {
   //     // Після завантаження фото оновіть значення imageSource
   //   };
 
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.containerBack}>
+    <View style={styles.containerBack}
+    onLayout={onLayoutRootView}>
     <Image
       source={require("../assets/images/PhotoBG.png")}
       style={styles.backgroundImage}
@@ -84,7 +90,7 @@ export const RegistrationScreen = () => {
       behavior={Platform.OS === "ios" ? "padding" : null}
       keyboardVerticalOffset={-260}
       style={styles.container}
-      onLayout={onLayoutRootView}
+      
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View
@@ -98,7 +104,7 @@ export const RegistrationScreen = () => {
             //   onPress={handleImageUpload}
             >
               <View style={styles.plusIconWrapper}>
-                <PlusIcon style={styles.plusIcon} />
+                <PlusIcon style={{fill: '#FF6C00', width: 13, height: 13}} />
               </View>
             </TouchableOpacity>
           </View>
@@ -155,7 +161,7 @@ export const RegistrationScreen = () => {
                 >
                   <Text style={styles.buttonText}>Зареєструватися</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={() => navigation.navigate("Login")}>
                   <Text style={styles.link}>Вже є акаунт? Увійти</Text>
                 </TouchableOpacity>
               </>

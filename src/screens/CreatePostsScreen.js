@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { PlusIcon, User, Grid } from "../assets/svg/svg";
+import React, { useState } from "react";
+import { PlusIcon } from "../assets/svg/svg";
 import { useFonts } from "expo-font";
 import * as Font from "expo-font";
 import * as SplashScreen from 'expo-splash-screen';
@@ -18,7 +18,7 @@ import {
 
 SplashScreen.preventAutoHideAsync();
 
-export const PostScreen = () => {
+export const CreatePostsScreen = () => {
 
 //   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
@@ -61,19 +61,15 @@ export const PostScreen = () => {
 
       {/* Footer */}
       <View style={styles.footer}>
-      <View style={styles.userIcon}>
-          <Grid style={{fill: 'white', width: 40, height: 40}} />
+        <View style={styles.footerIcon}>
+          <PlusIcon width={24} height={24} />
         </View>
-        <View style={styles.plusIcon}>
-          <PlusIcon style={{fill: 'white', width: 13, height: 13}} />
+        <View style={styles.footerIcon}>
+          {/* <UserIcon width={24} height={24} /> */}
         </View>
-        <View style={styles.gridIcon}>
-          <User style={{ width: 40, height: 40,
-  // strokeWidth: 1,
-  stroke: "#212121",
-  fill: "none", }} /> 
+        <View style={styles.footerIcon}>
+          {/* <SettingsIcon width={24} height={24} /> */}
         </View>
-       
       </View>
     </View>
 
@@ -82,6 +78,89 @@ export const PostScreen = () => {
   );
 };
 
+// const styles = StyleSheet.create({
+//   container: {
+//       flex: 1,
+//     width: "100%",
+//     height: "100%",
+//     alignItems: "center",
+//     justifyContent: "space-around",
+//     padding: 24,
+//     borderRadius: 25,
+//     borderBottomLeftRadius: 0,
+//     borderBottomRightRadius: 0,
+//     backgroundColor: "#fff",
+//     position: "absolute",
+//     bottom: 0,
+//     left: 0,
+//         right: 0,
+//     fontFamily: 'Roboto-Regular',
+//   },
+//   innerContainer: {
+//     flex: 1,
+//     width: "100%",
+//     height: "100%",
+//     alignItems: "center",
+//   }
+
+//   loginText: {
+//     fontWeight: "bold",
+//     marginBottom: 32,
+//     marginTop:32,
+//     fontFamily: "Roboto-Bold",
+//     fontSize: 36,
+//   },
+//   input: {
+//     width: "100%",
+//     height: 50,
+//     borderWidth: 1,
+//     borderColor: "#ccc",
+//     borderRadius: 8,
+//     paddingHorizontal: 10,
+//     marginBottom: 16,
+//     fontSize: 16,
+//     },
+//     inputWraper: {
+//       width: "100%",
+// position: 'relative',
+//   },
+//   inputFocused: {
+//     borderColor: "#FF6C00",
+//   },
+
+//   link: {
+//     color: "#1B4371",
+//     textDecorationLine: "none",
+//     fontSize: 16,
+//   },
+
+//   showPasswordButton: {
+//     position: "absolute",
+//     top: 18,
+//     right: 16,
+//   },
+//   showPasswordButtonText: {
+//     color: "#1B4371",
+//     fontSize: 16,
+//   },
+//   button: {
+//     flexDirection: "column",
+//     alignItems: "center",
+//     padding: 16,
+//     paddingHorizontal: 32,
+//     marginBottom: 16,
+//     marginTop: 27,
+//     //   flex: 1,
+//     width: "100%",
+//     alignSelf: "stretch",
+//     backgroundColor: "#FF6C00",
+//     borderRadius: 100,
+//   },
+//   buttonText: {
+//     color: "#fff",
+//     fontWeight: "regular",
+//     fontSize: 16,
+//   },
 
 const styles = StyleSheet.create({
     container: {
@@ -117,45 +196,15 @@ const styles = StyleSheet.create({
     
     },
     footer: {
-      // flex: 1,
       flexDirection: "row",
-      // justifyContent: "space-between"
       height: 60,
       borderTopWidth: 1,
       borderTopColor: "#ccc",
-      justifyContent: "center",
+      justifyContent: "space-around",
       alignItems: "center",
-      marginBottom: 30,
-      width: "100%",
     },
-
-    plusIcon: {
-      // flex: 1,
-      backgroundColor: "#FF6C00",
-  width: 70,
-  height: 40,
-  borderRadius: 50,
-  justifyContent: 'center', 
-  alignItems: 'center',
-  // marginTop: 20,
-
+    footerIcon: {
+      backgroundColor: "orange"
     },
-   gridIcon: {
-    // backgroundColor: "white",
-    // flex: 1,
-    marginHorizontal: 30,
-    justifyContent: 'center', 
-    alignItems: 'center',
-    width: 40,
-    height: 40,
-   },
-   userIcon: {
-    marginHorizontal: 30,
-    width: 40,
-    height: 40,
-    justifyContent: 'center', 
-    alignItems: 'center',
-   }
-
   });
   

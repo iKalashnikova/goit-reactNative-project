@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useFonts } from "expo-font";
-import * as Font from "expo-font";
+import { useNavigation } from "@react-navigation/native";
+import * as SplashScreen from "expo-splash-screen";
 
 import {
   View,
@@ -16,6 +17,9 @@ import {
   Dimensions,
 } from "react-native";
 
+
+SplashScreen.preventAutoHideAsync();
+
 export const LoginScreen = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
@@ -30,6 +34,12 @@ export const LoginScreen = () => {
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
     "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
   });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
   const handleLogin = () => {
     console.log("Електронна пошта:", emailValue);
@@ -54,72 +64,82 @@ export const LoginScreen = () => {
     return null;
   }
 
-  return (
-    <View style={styles.containerBack}>
-    <Image
-      source={require("../assets/images/PhotoBG.png")}
-      style={styles.backgroundImage}
-    />
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : null}
-      keyboardVerticalOffset={-300}
-      style={styles.container}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View
-          style={[styles.innerContainer, { height: (screenHeight * 3) / 5 }]}
-        >
-          <Text style={styles.loginText}>Увійти</Text>
-          <View style={styles.form}>
-            <TextInput
-              style={[styles.input, emailFocused && styles.inputFocused]}
-              placeholder="Електронна пошта"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCompleteType="email"
-              value={emailValue}
-              onChangeText={setEmailValue}
-              autoFocus={true}
-              onFocus={() => setEmailFocused(true)}
-              onBlur={() => setEmailFocused(false)}
-            />
-            <View style={styles.inputWraper}>
-              <TextInput
-                style={[styles.input, passwordFocused && styles.inputFocused]}
-                placeholder="Пароль"
-                value={passwordValue}
-                onChangeText={setPasswordValue}
-                secureTextEntry={!showPassword}
-                onFocus={() => setPasswordFocused(true)}
-                onBlur={() => setPasswordFocused(false)}
-              />
-              <TouchableOpacity
-                style={styles.showPasswordButton}
-                onPress={() => setShowPassword(!showPassword)}
-              >
-                <Text style={styles.showPasswordButtonText}>
-                  {showPassword ? "Сховати" : "Показати"}
-                </Text>
-              </TouchableOpacity>
+  const navigation = useNavigation();
 
-              {!isKeyboardOpen && (
-                <>
-                  <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                    <Text style={styles.buttonText}>Увійти</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity >
-                    <Text style={styles.link}>
-                      Немає акаунту? Зареєструватися
-                    </Text>
-                  </TouchableOpacity>
-                </>
-              )}
+  return (
+    <View style={styles.containerBack} onLayout={onLayoutRootView}>
+      <Image
+        source={require("../assets/images/PhotoBG.png")}
+        style={styles.backgroundImage}
+      />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : null}
+        keyboardVerticalOffset={-300}
+        style={styles.container}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View
+            style={[styles.innerContainer, { height: (screenHeight * 3) / 5 }]}
+          >
+            <Text style={styles.loginText}>Увійти</Text>
+            <View style={styles.form}>
+              <TextInput
+                style={[styles.input, emailFocused && styles.inputFocused]}
+                placeholder="Електронна пошта"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCompleteType="email"
+                value={emailValue}
+                onChangeText={setEmailValue}
+                autoFocus={true}
+                onFocus={() => setEmailFocused(true)}
+                onBlur={() => setEmailFocused(false)}
+              />
+              <View style={styles.inputWraper}>
+                <TextInput
+                  style={[styles.input, passwordFocused && styles.inputFocused]}
+                  placeholder="Пароль"
+                  value={passwordValue}
+                  onChangeText={setPasswordValue}
+                  secureTextEntry={!showPassword}
+                  onFocus={() => setPasswordFocused(true)}
+                  onBlur={() => setPasswordFocused(false)}
+                />
+                <TouchableOpacity
+                  style={styles.showPasswordButton}
+                  onPress={() => setShowPassword(!showPassword)}
+                >
+                  <Text style={styles.showPasswordButtonText}>
+                    {showPassword ? "Сховати" : "Показати"}
+                  </Text>
+                </TouchableOpacity>
+
+                {!isKeyboardOpen && (
+                  <>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => {
+                        handleLogin();
+                        navigation.navigate("Home");
+                      }}
+                    >
+                      <Text style={styles.buttonText}>Увійти</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                      <Text
+                        style={styles.link}
+                        onPress={() => navigation.navigate("Registration")}
+                      >
+                        Немає акаунту? Зареєструватися
+                      </Text>
+                    </TouchableOpacity>
+                  </>
+                )}
+              </View>
             </View>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
-
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </View>
   );
 };
@@ -140,7 +160,7 @@ const styles = StyleSheet.create({
   },
   container: {
     //   flex: 1,
-    
+
     width: "100%",
     alignItems: "center",
     justifyContent: "space-around",
@@ -192,7 +212,7 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     textDecorationLine: "none",
     fontSize: 16,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   showPasswordButton: {
@@ -219,12 +239,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontWeight: "regular",
+    fontWeight: "normal",
     fontSize: 16,
   },
-});
-
-Font.loadAsync({
-  "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
-  "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
 });
