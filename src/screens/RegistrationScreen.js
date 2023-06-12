@@ -3,8 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 // import * as Font from "expo-font";
 import * as SplashScreen from 'expo-splash-screen';
-import { PlusIcon } from "../assets/svg/svg";
-import Svg, { Circle } from "react-native-svg";
+import Icon from "react-native-vector-icons/Ionicons";
 import {
   View,
   TextInput,
@@ -43,7 +42,7 @@ export const RegistrationScreen = () => {
   });
 
   const navigation = useNavigation();
-  
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
@@ -106,7 +105,7 @@ export const RegistrationScreen = () => {
             //   onPress={handleImageUpload}
             >
               <View style={styles.plusIconWrapper}>
-                <PlusIcon style={{fill: '#FF6C00', width: 13, height: 13}} />
+              <Icon name="add-outline" size={24} color='#FF6C00'style={styles.plusIcon} />
               </View>
             </TouchableOpacity>
           </View>
@@ -262,7 +261,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 25,
     height: 25,
-    left: 100,
+    left: 110,
     top: 80,
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
@@ -271,6 +270,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     fill: "#FF6C00",
+  },
+  plusIcon: {
+    marginTop: -1, 
+    marginLeft: 1,
   },
   showPasswordButton: {
     position: "absolute",

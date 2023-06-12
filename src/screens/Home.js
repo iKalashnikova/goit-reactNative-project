@@ -10,25 +10,11 @@ import { PostScreen } from "./PostsScreen";
 import { CreatePostsScreen } from "./CreatePostsScreen";
 import { ProfileScreen } from "./ProfileScreen";
 
-// function Settings() {
-//     return (
-//       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-//         <Text>Settings!</Text>
-//       </View>
-//     );
-//   }
-
-//   function Profile() {
-//     return (
-//       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-//         <Text>Profile!</Text>
-//       </View>
-//     );
-//   }
 
 const Tabs = createBottomTabNavigator();
 
 const Home = () => {
+    
   return (
     <Tabs.Navigator
       screenOptions={({ route }) => ({
@@ -56,10 +42,7 @@ const Home = () => {
           );
         },
       })}
-    //   tabBarOptions={{
-    //     activeTintColor: "tomato",
-    //     inactiveTintColor: "gray",
-    //   }}
+   
     >
       <Tabs.Screen
         name="Posts"
