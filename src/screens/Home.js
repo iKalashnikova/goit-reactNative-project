@@ -1,23 +1,22 @@
-import React, { useState } from "react";
-import { useFonts } from "expo-font";
-import * as Font from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, View, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { PostScreen } from "./PostsScreen";
 import { CreatePostsScreen } from "./CreatePostsScreen";
 import { ProfileScreen } from "./ProfileScreen";
+import { useRoute } from "@react-navigation/native";
 
 
 const Tabs = createBottomTabNavigator();
 
 const Home = () => {
-    
+  
   return (
     <Tabs.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
+        tabBarStyle: route.name === 'Create' ? { display: 'none' } : {},
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 

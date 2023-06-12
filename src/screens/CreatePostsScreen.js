@@ -3,6 +3,7 @@ import { useFonts } from "expo-font";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useFocusEffect } from "@react-navigation/native";
 
 import {
   View,
@@ -20,7 +21,7 @@ import {
 
 SplashScreen.preventAutoHideAsync();
 
-export const CreatePostsScreen = () => {
+export const CreatePostsScreen = ({ navigation }) => {
 
     const [photo, setPhoto] = useState("");
     const [title, setTitle] = useState("");
@@ -32,6 +33,7 @@ export const CreatePostsScreen = () => {
         "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
       });
     
+      
       const handlePublish = () => {
         console.log("Опубліковано!");
       };

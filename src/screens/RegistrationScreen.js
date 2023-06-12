@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-// import * as Font from "expo-font";
 import * as SplashScreen from 'expo-splash-screen';
 import Icon from "react-native-vector-icons/Ionicons";
 import {
