@@ -130,7 +130,7 @@ export const RegistrationScreen = () => {
               keyboardType="default"
               autoCapitalize="none"
               autoCompleteType="username"
-              autoFocus={true}
+              autoFocus={false}
               onFocus={() => setloginFocused(true)}
               onBlur={() => setloginFocused(false)}
             />
@@ -142,7 +142,7 @@ export const RegistrationScreen = () => {
               keyboardType="email-address"
               autoCapitalize="none"
               autoCompleteType="email"
-              autoFocus={true}
+              autoFocus={false}
               onFocus={() => setEmailFocused(true)}
               onBlur={() => setEmailFocused(false)}
             />

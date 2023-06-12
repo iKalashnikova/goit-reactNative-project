@@ -93,7 +93,7 @@ export const LoginScreen = () => {
                 autoCompleteType="email"
                 value={emailValue}
                 onChangeText={setEmailValue}
-                autoFocus={true}
+                autoFocus={false}
                 onFocus={() => setEmailFocused(true)}
                 onBlur={() => setEmailFocused(false)}
               />
