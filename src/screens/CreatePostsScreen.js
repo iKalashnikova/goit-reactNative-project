@@ -46,7 +46,7 @@ export const CreatePostsScreen = () => {
         return null;
       }
     
-      const isFormValid = photo !== "" && title !== "" && location !== "";
+      const isFormValid = title !== "" && location !== "";
 
       return (
         <KeyboardAvoidingView
