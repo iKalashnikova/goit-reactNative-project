@@ -44,11 +44,21 @@ export const LoginScreen = () => {
   }, [fontsLoaded]);
 
   const handleLogin = () => {
+
+    if (!emailValue || !passwordValue) {
+      
+      console.log("Please fill in all fields");
+      return;
+    }
     console.log("Електронна пошта:", emailValue);
     console.log("Пароль:", passwordValue);
 
     setEmailValue("");
     setPasswordValue("");
+
+    if (navigation) {
+      navigation.navigate("Home");
+    }
   };
 
   const keyboardDidShow = () => {
@@ -120,10 +130,7 @@ export const LoginScreen = () => {
                   <>
                     <TouchableOpacity
                       style={styles.button}
-                      onPress={() => {
-                        handleLogin();
-                        navigation.navigate("Home");
-                      }}
+                      onPress={handleLogin}
                     >
                       <Text style={styles.buttonText}>Увійти</Text>
                     </TouchableOpacity>
