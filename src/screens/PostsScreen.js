@@ -3,6 +3,7 @@ import { PlusIcon, User, Grid } from "../assets/svg/svg";
 import { useFonts } from "expo-font";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import Icon from "react-native-vector-icons/Ionicons";
 
 import {
   View,
@@ -48,7 +49,15 @@ export const PostScreen = () => {
         <View style={styles.container}>
           {/* Header */}
           <View style={styles.header}>
+          <View style={styles.headerContent}>
             <Text style={styles.headerText}>Публікації</Text>
+          
+          <TouchableOpacity
+          // onPress={handleLogout}
+          >
+            <Icon name="log-out-outline" size={24} color="#000" />
+          </TouchableOpacity>
+          </View>
           </View>
 
           {/* Main Content */}
@@ -56,27 +65,6 @@ export const PostScreen = () => {
             {/* Список користувачів */}
             {/* Додатковий вміст */}
           </View>
-
-          {/* Footer */}
-          {/* <View style={styles.footer}>
-            <View style={styles.userIcon}>
-              <Grid style={{ fill: "white", width: 40, height: 40 }} />
-            </View>
-            <View style={styles.plusIcon}>
-              <PlusIcon style={{ fill: "white", width: 13, height: 13 }} />
-            </View>
-            <View style={styles.gridIcon}>
-              <User
-                style={{
-                  width: 40,
-                  height: 40,
-                  // strokeWidth: 1,
-                  stroke: "#212121",
-                  fill: "none",
-                }}
-              />
-            </View> */}
-          {/* </View> */}
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -105,7 +93,13 @@ const styles = StyleSheet.create({
     width: "100%",
     borderBottomColor: "#ccc",
   },
+  headerContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   headerText: {
+    flex: 1,
     fontSize: 17,
     fontWeight: "bold",
     textAlign: "center",
@@ -126,31 +120,4 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     width: "100%",
   },
-
-  // plusIcon: {
-  //   // flex: 1,
-  //   backgroundColor: "#FF6C00",
-  //   width: 70,
-  //   height: 40,
-  //   borderRadius: 50,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   // marginTop: 20,
-  // },
-  // gridIcon: {
-  //   // backgroundColor: "white",
-  //   // flex: 1,
-  //   marginHorizontal: 30,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   width: 40,
-  //   height: 40,
-  // },
-  // userIcon: {
-  //   marginHorizontal: 30,
-  //   width: 40,
-  //   height: 40,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
 });

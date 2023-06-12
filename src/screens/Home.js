@@ -56,10 +56,10 @@ const Home = () => {
           );
         },
       })}
-      tabBarOptions={{
-        activeTintColor: "tomato",
-        inactiveTintColor: "gray",
-      }}
+    //   tabBarOptions={{
+    //     activeTintColor: "tomato",
+    //     inactiveTintColor: "gray",
+    //   }}
     >
       <Tabs.Screen
         name="Posts"
