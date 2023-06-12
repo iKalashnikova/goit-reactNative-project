@@ -42,6 +42,8 @@ export const RegistrationScreen = () => {
     "Roboto-Medium":require("../assets/fonts/Roboto-Medium.ttf"),
   });
 
+  const navigation = useNavigation();
+  
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
@@ -77,7 +79,7 @@ export const RegistrationScreen = () => {
   //     // Після завантаження фото оновіть значення imageSource
   //   };
 
-  const navigation = useNavigation();
+ 
 
   return (
     <View style={styles.containerBack}
@@ -157,7 +159,7 @@ export const RegistrationScreen = () => {
               <>
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={handleRegistration}
+                  onPress={() => {handleRegistration(), navigation.navigate("Home")}}
                 >
                   <Text style={styles.buttonText}>Зареєструватися</Text>
                 </TouchableOpacity>

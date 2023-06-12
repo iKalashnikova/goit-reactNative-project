@@ -35,6 +35,8 @@ export const LoginScreen = () => {
     "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
   });
 
+  const navigation = useNavigation();
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
@@ -64,7 +66,7 @@ export const LoginScreen = () => {
     return null;
   }
 
-  const navigation = useNavigation();
+  
 
   return (
     <View style={styles.containerBack} onLayout={onLayoutRootView}>
@@ -125,10 +127,9 @@ export const LoginScreen = () => {
                     >
                       <Text style={styles.buttonText}>Увійти</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("Registration")}>
                       <Text
                         style={styles.link}
-                        onPress={() => navigation.navigate("Registration")}
                       >
                         Немає акаунту? Зареєструватися
                       </Text>
