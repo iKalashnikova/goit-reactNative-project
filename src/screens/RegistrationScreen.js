@@ -50,6 +50,13 @@ export const RegistrationScreen = () => {
   }, [fontsLoaded]);
   
   const handleRegistration = () => {
+
+    if (!loginValue || !emailValue || !passwordValue) {
+      
+      console.log("Please fill in all fields");
+      return;
+    }
+
     console.log("Логін:", loginValue);
     console.log("Електронна пошта:", emailValue);
     console.log("Пароль:", passwordValue);
@@ -57,6 +64,10 @@ export const RegistrationScreen = () => {
     setLoginValue("");
     setEmailValue("");
     setPasswordValue("");
+
+    if (navigation) {
+      navigation.navigate("Home");
+    }
   };
 
   const keyboardDidShow = () => {
@@ -158,7 +169,7 @@ export const RegistrationScreen = () => {
               <>
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={() => {handleRegistration(), navigation.navigate("Home")}}
+                  onPress={handleRegistration}
                 >
                   <Text style={styles.buttonText}>Зареєструватися</Text>
                 </TouchableOpacity>

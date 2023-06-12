@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { PlusIcon, User, Grid } from "../assets/svg/svg";
 import { useFonts } from "expo-font";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
