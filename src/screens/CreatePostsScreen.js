@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import {
   View,
@@ -69,10 +70,11 @@ export const CreatePostsScreen = ({ navigation }) => {
   const isFormValid = title !== "" && location !== "";
 
   return (
-    <KeyboardAvoidingView
+    <KeyboardAwareScrollView
       behavior={Platform.OS === "ios" ? "padding" : null}
-      keyboardVerticalOffset={-300}
-      style={styles.container}
+      keyboardShouldPersistTaps="handled"
+      // keyboardVerticalOffset={-300}
+      contentContainerStyle={styles.container}
       onLayout={onLayoutRootView}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -186,7 +188,7 @@ export const CreatePostsScreen = ({ navigation }) => {
           </View>
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 };
 

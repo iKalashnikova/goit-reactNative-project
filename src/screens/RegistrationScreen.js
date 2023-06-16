@@ -3,6 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from 'expo-splash-screen';
 import Icon from "react-native-vector-icons/Ionicons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import {
   View,
   TextInput,
@@ -99,7 +101,8 @@ export const RegistrationScreen = () => {
     />
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : null}
-      keyboardVerticalOffset={-260}
+      keyboardVerticalOffset={Platform.OS === "ios" ? -260 : 0}
+      // keyboardVerticalOffset={-260}
       style={styles.container}
       
     >
