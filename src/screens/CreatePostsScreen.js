@@ -324,15 +324,18 @@ const styles = StyleSheet.create({
     // width: "100%",
     // aspectRatio: 1,
     
+    
    },
    cameraContainer: {
     width: "100%",
     aspectRatio: 1,
+    
    },
   photoView: {
     flex: 1,
     backgroundColor: "transparent",
     justifyContent: "flex-end",
+    justifyContent: "center", alignItems: "center"
   },
 
   flipContainer: {
@@ -341,7 +344,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
 
-  cameraButton: { alignSelf: "center" },
+  cameraButton: { alignSelf: "center", justifyContent: "center", },
 
   takePhotoOut: {
     // borderWidth: 2,
@@ -360,22 +363,15 @@ const styles = StyleSheet.create({
   },
 
   takePhoto: {
-    // borderWidth: 2,
-    // borderColor: "white",
     height: 50,
     width: 50,
     display: "flex",
       justifyContent: "center",
       alignItems: "center",
-    // backgroundColor: "white",
-    // borderRadius: 50,
     position: 'absolute',
     top: -14,
     left: -12,
     color: 'white',
-    // opacity: 1
-    // transform: [{ translateX: -12 }, { translateY: -12 }],
-    
   },
   loadText: {
     fontSize: 16, 
