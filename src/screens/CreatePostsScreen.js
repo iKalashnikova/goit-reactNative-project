@@ -1,9 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useFonts } from "expo-font";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
+import { Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
 
 import {
   View,
@@ -24,6 +26,25 @@ export const CreatePostsScreen = ({ navigation }) => {
   const [photo, setPhoto] = useState("");
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const { status } = await Camera.Camera.requestCameraPermissionsAsync();
+  //     await MediaLibrary.Camera.requestPermissionsAsync();
+
+  //     setHasPermission(status === "granted");
+  //   })();
+  // }, []);
+
+  // if (hasPermission === null) {
+  //   return <View />;
+  // }
+  // if (hasPermission === false) {
+  //   return <Text>No access to camera</Text>;
+  // }
 
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
@@ -69,7 +90,56 @@ export const CreatePostsScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.container}>
-            <Text>"Завантажити фото"</Text>
+            <View style={styles.cameraContainer}>
+            <Camera style={styles.camera} type={type} ref={setCameraRef}>
+              <View style={styles.photoView}>
+                {/* <TouchableOpacity
+                  style={styles.flipContainer}
+                  onPress={() => {
+                    setType(
+                      type === Camera.Constants.Type.back
+                        ? Camera.Constants.Type.front
+                        : Camera.Constants.Type.back
+                    );
+                  }}
+                >
+                  <Text
+                    style={{ fontSize: 18, color: "white" }}
+                  >
+                    {" "}
+                    Flip{" "}
+                  </Text>
+                </TouchableOpacity> */}
+                <TouchableOpacity
+                  style={styles.cameraButton}
+                  onPress={async () => {
+                    if (cameraRef) {
+                      const { uri } = await cameraRef.takePictureAsync();
+                      await MediaLibrary.createAssetAsync(uri);
+                    }
+                  }}
+                >
+                
+                  <View style={styles.takePhotoOut}>
+
+                    <View >
+                       <Icon name="camera"
+                    size={24}
+                    color="white"
+                    style={styles.takePhoto}
+                  />
+                  </View>
+                  </View>
+                  
+                </TouchableOpacity>
+              </View>
+              
+            </Camera>
+          
+            <Text
+                    style={styles.loadText}
+                  >Завантажте фото</Text>
+            </View>
 
             <TextInput
               style={styles.input}
@@ -106,13 +176,13 @@ export const CreatePostsScreen = ({ navigation }) => {
           </View>
           <View style={styles.footer}>
             <View style={styles.trashIconWraper}>
-          <Icon
+              <Icon
                 name="trash-outline"
                 size={24}
                 color="#000"
                 style={styles.trashIcon}
               />
-              </View>
+            </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -128,8 +198,8 @@ const styles = StyleSheet.create({
     // justifyContent: "space-around",
     paddingTop: 24,
     borderRadius: 25,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
+    // borderBottomLeftRadius: 0,
+    // borderBottomRightRadius: 0,
     backgroundColor: "#fff",
     fontFamily: "Roboto-Regular",
   },
@@ -231,15 +301,86 @@ const styles = StyleSheet.create({
   },
   trashIcon: {
     alignItems: "center",
-    color: "#fff"
+    color: "#fff",
   },
-  trashIconWraper:{
-    backgroundColor: '#ccc',
+  trashIconWraper: {
+    backgroundColor: "#ccc",
     opacity: 0.5,
     width: 70,
     height: 40,
     borderRadius: 50,
-    justifyContent: 'center',
-      alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  camera: { flex: 1,
+    // padding: 20,
+    marginTop: 32,
+    marginRight: 16,
+    marginLeft: 16,
+    marginBottom: 8,
+    borderColor: "#000",
+    borderRadius: 25,
+    overflow: "hidden",
+    // width: "100%",
+    // aspectRatio: 1,
+    
+   },
+   cameraContainer: {
+    width: "100%",
+    aspectRatio: 1,
+   },
+  photoView: {
+    flex: 1,
+    backgroundColor: "transparent",
+    justifyContent: "flex-end",
+  },
+
+  flipContainer: {
+
+    // flex: 0.1,
+    alignSelf: "flex-end",
+  },
+
+  cameraButton: { alignSelf: "center" },
+
+  takePhotoOut: {
+    // borderWidth: 2,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    // opacity: 0.2,
+    borderColor: "white",
+    height: 50,
+    width: 50,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+    position: 'relative',
+    // flex: 1,
+  margin: 20,
+  },
+
+  takePhoto: {
+    // borderWidth: 2,
+    // borderColor: "white",
+    height: 50,
+    width: 50,
+    display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    // backgroundColor: "white",
+    // borderRadius: 50,
+    position: 'absolute',
+    top: -14,
+    left: -12,
+    color: 'white',
+    // opacity: 1
+    // transform: [{ translateX: -12 }, { translateY: -12 }],
+    
+  },
+  loadText: {
+    fontSize: 16, 
+    color: "#ccc",
+    marginBottom: 48,
+    marginLeft: 16
   }
 });
