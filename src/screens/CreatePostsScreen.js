@@ -7,6 +7,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import * as Location from "expo-location";
 
 import {
   View,
@@ -47,6 +48,22 @@ export const CreatePostsScreen = ({ navigation }) => {
   //   return <Text>No access to camera</Text>;
   // }
 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegrounPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setLocation(coords);
+    })();
+  }, []);
+
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
     "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
@@ -54,6 +71,8 @@ export const CreatePostsScreen = ({ navigation }) => {
   });
 
   const handlePublish = () => {
+    console.log(location);
+    navigation.navigate('Home');
     console.log("Опубліковано!");
   };
 

@@ -86,7 +86,8 @@ export const LoginScreen = () => {
       />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
-        keyboardVerticalOffset={-300}
+        keyboardVerticalOffset={Platform.OS === "ios" ? -300 : 0}
+        // keyboardVerticalOffset={-300}
         style={styles.container}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

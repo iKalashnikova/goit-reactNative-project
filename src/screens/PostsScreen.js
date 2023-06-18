@@ -47,15 +47,15 @@ export const PostScreen = () => {
         <View style={styles.container}>
           {/* Header */}
           <View style={styles.header}>
-          <View style={styles.headerContent}>
-            <Text style={styles.headerText}>Публікації</Text>
-          
-          <TouchableOpacity
-          // onPress={handleLogout}
-          >
-            <Icon name="log-out-outline" size={24} color="#000" />
-          </TouchableOpacity>
-          </View>
+            <View style={styles.headerContent}>
+              <Text style={styles.headerText}>Публікації</Text>
+
+              <TouchableOpacity
+              // onPress={handleLogout}
+              >
+                <Icon name="log-out-outline" size={24} color="#000" />
+              </TouchableOpacity>
+            </View>
           </View>
 
           {/* Main Content */}
