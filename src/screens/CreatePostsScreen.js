@@ -48,14 +48,11 @@ export const CreatePostsScreen = ({ navigation }) => {
   //   return <Text>No access to camera</Text>;
   // }
 
-
-
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
     "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
     "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
   });
-
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -73,7 +70,7 @@ export const CreatePostsScreen = ({ navigation }) => {
       console.log("Permission to access location was denied");
       return;
     }
-  
+
     let location = await Location.getCurrentPositionAsync({});
     const coords = {
       latitude: location.coords.latitude,
@@ -85,7 +82,7 @@ export const CreatePostsScreen = ({ navigation }) => {
   const handlePublish = () => {
     getLocation();
     console.log(location);
-    navigation.navigate('Home');
+    navigation.navigate("Home");
     console.log("Опубліковано!");
   };
 
@@ -115,54 +112,32 @@ export const CreatePostsScreen = ({ navigation }) => {
 
           <View style={styles.container}>
             <View style={styles.cameraContainer}>
-            <Camera style={styles.camera} type={type} ref={setCameraRef}>
-              <View style={styles.photoView}>
-                {/* <TouchableOpacity
-                  style={styles.flipContainer}
-                  onPress={() => {
-                    setType(
-                      type === Camera.Constants.Type.back
-                        ? Camera.Constants.Type.front
-                        : Camera.Constants.Type.back
-                    );
-                  }}
-                >
-                  <Text
-                    style={{ fontSize: 18, color: "white" }}
+              <Camera style={styles.camera} type={type} ref={setCameraRef}>
+                <View style={styles.photoView}>
+                  <TouchableOpacity
+                    style={styles.cameraButton}
+                    onPress={async () => {
+                      if (cameraRef) {
+                        const { uri } = await cameraRef.takePictureAsync();
+                        await MediaLibrary.createAssetAsync(uri);
+                      }
+                    }}
                   >
-                    {" "}
-                    Flip{" "}
-                  </Text>
-                </TouchableOpacity> */}
-                <TouchableOpacity
-                  style={styles.cameraButton}
-                  onPress={async () => {
-                    if (cameraRef) {
-                      const { uri } = await cameraRef.takePictureAsync();
-                      await MediaLibrary.createAssetAsync(uri);
-                    }
-                  }}
-                >
-                
-                  <View style={styles.takePhotoOut}>
+                    <View style={styles.takePhotoOut}>
+                      <View>
+                        <Icon
+                          name="camera"
+                          size={24}
+                          color="white"
+                          style={styles.takePhoto}
+                        />
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </Camera>
 
-                    <View >
-                       <Icon name="camera"
-                    size={24}
-                    color="white"
-                    style={styles.takePhoto}
-                  />
-                  </View>
-                  </View>
-                  
-                </TouchableOpacity>
-              </View>
-              
-            </Camera>
-          
-            <Text
-                    style={styles.loadText}
-                  >Завантажте фото</Text>
+              <Text style={styles.loadText}>Завантажте фото</Text>
             </View>
 
             <TextInput
@@ -336,7 +311,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  camera: { flex: 1,
+  camera: {
+    flex: 1,
     // padding: 20,
     marginTop: 32,
     marginRight: 16,
@@ -347,32 +323,29 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     // width: "100%",
     // aspectRatio: 1,
-    
-    
-   },
-   cameraContainer: {
+  },
+  cameraContainer: {
     width: "100%",
     aspectRatio: 1,
-    
-   },
+  },
   photoView: {
     flex: 1,
     backgroundColor: "transparent",
     justifyContent: "flex-end",
-    justifyContent: "center", alignItems: "center"
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   flipContainer: {
-
     // flex: 0.1,
     alignSelf: "flex-end",
   },
 
-  cameraButton: { alignSelf: "center", justifyContent: "center", },
+  cameraButton: { alignSelf: "center", justifyContent: "center" },
 
   takePhotoOut: {
     // borderWidth: 2,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
     // opacity: 0.2,
     borderColor: "white",
     height: 50,
@@ -381,26 +354,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 50,
-    position: 'relative',
+    position: "relative",
     // flex: 1,
-  margin: 20,
+    margin: 20,
   },
 
   takePhoto: {
     height: 50,
     width: 50,
     display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    position: 'absolute',
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     top: -14,
     left: -12,
-    color: 'white',
+    color: "white",
   },
   loadText: {
-    fontSize: 16, 
+    fontSize: 16,
     color: "#ccc",
     marginBottom: 48,
-    marginLeft: 16
-  }
+    marginLeft: 16,
+  },
 });
