@@ -48,21 +48,7 @@ export const CreatePostsScreen = ({ navigation }) => {
   //   return <Text>No access to camera</Text>;
   // }
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegrounPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
-      }
 
-      let location = await Location.getCurrentPositionAsync({});
-      const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      setLocation(coords);
-    })();
-  }, []);
 
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
@@ -70,11 +56,6 @@ export const CreatePostsScreen = ({ navigation }) => {
     "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
   });
 
-  const handlePublish = () => {
-    console.log(location);
-    navigation.navigate('Home');
-    console.log("Опубліковано!");
-  };
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -85,6 +66,28 @@ export const CreatePostsScreen = ({ navigation }) => {
   if (!fontsLoaded) {
     return null;
   }
+
+  const getLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      console.log("Permission to access location was denied");
+      return;
+    }
+  
+    let location = await Location.getCurrentPositionAsync({});
+    const coords = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+    setLocation(JSON.stringify(coords));
+  };
+
+  const handlePublish = () => {
+    getLocation();
+    console.log(location);
+    navigation.navigate('Home');
+    console.log("Опубліковано!");
+  };
 
   const isFormValid = title !== "" && location !== "";
 
