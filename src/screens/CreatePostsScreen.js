@@ -32,21 +32,21 @@ export const CreatePostsScreen = ({ navigation }) => {
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const { status } = await Camera.Camera.requestCameraPermissionsAsync();
-  //     await MediaLibrary.Camera.requestPermissionsAsync();
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      await MediaLibrary.Camera.requestPermissionsAsync();
 
-  //     setHasPermission(status === "granted");
-  //   })();
-  // }, []);
+      setHasPermission(status === "granted");
+    })();
+  }, []);
 
-  // if (hasPermission === null) {
-  //   return <View />;
-  // }
-  // if (hasPermission === false) {
-  //   return <Text>No access to camera</Text>;
-  // }
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
 
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
@@ -82,7 +82,7 @@ export const CreatePostsScreen = ({ navigation }) => {
   const handlePublish = () => {
     getLocation();
     console.log(location);
-    navigation.navigate("Home");
+    navigation.navigate("PostScreen");
     console.log("Опубліковано!");
   };
 
@@ -169,10 +169,10 @@ export const CreatePostsScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.mainContent}>
+          {/* <View style={styles.mainContent}> */}
             {/* Список користувачів */}
             {/* Додатковий вміст */}
-          </View>
+          {/* </View> */}
           <View style={styles.footer}>
             <View style={styles.trashIconWraper}>
               <Icon
