@@ -1,8 +1,5 @@
 import React, { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-// import * as Font from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import {
@@ -20,7 +17,6 @@ import {
   Dimensions,
 } from "react-native";
 
-SplashScreen.preventAutoHideAsync();
 
 export const ProfileScreen = () => {
   const [imageSource, setImageSource] = useState(null);
@@ -28,24 +24,9 @@ export const ProfileScreen = () => {
 
   const screenHeight = Dimensions.get("window").height;
 
-  const [fontsLoaded] = useFonts({
-    "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
-    "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
-    "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
-  });
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
 
   return (
-    <View style={styles.containerBack} onLayout={onLayoutRootView}>
+    <View style={styles.containerBack}>
       <Image
         source={require("../assets/images/PhotoBG.png")}
         style={styles.backgroundImage}

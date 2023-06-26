@@ -15,33 +15,15 @@ import {
   Keyboard,
 } from "react-native";
 
-SplashScreen.preventAutoHideAsync();
-
 export const PostScreen = () => {
   //   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
-  const [fontsLoaded] = useFonts({
-    "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
-    "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
-    "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
-  });
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : null}
       keyboardVerticalOffset={-300}
       style={styles.container}
-      onLayout={onLayoutRootView}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>

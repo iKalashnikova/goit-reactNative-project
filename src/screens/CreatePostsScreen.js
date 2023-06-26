@@ -1,7 +1,4 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useFonts } from "expo-font";
-import * as Font from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
 import { Camera } from "expo-camera";
@@ -22,67 +19,69 @@ import {
   TextInput,
 } from "react-native";
 
-SplashScreen.preventAutoHideAsync();
 
 export const CreatePostsScreen = ({ navigation }) => {
   const [photo, setPhoto] = useState("");
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
-  const [hasPermission, setHasPermission] = useState(null);
+  // const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
 
+  const [permission, requestPermission] = Camera.useCameraPermissions();
+
+
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      await MediaLibrary.requestCameraPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
 
-      setHasPermission(status === "granted");
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setLocation(coords);
     })();
   }, []);
 
-  if (hasPermission === null) {
+  if (!permission) {
+    // Camera permissions are still loading
     return <View />;
   }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+
+  if (!permission.granted) {
+    // Camera permissions are not granted yet
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+        <Button onPress={requestPermission} title="grant permission" />
+      </View>
+    );
   }
 
-  const [fontsLoaded] = useFonts({
-    "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
-    "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
-    "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
-  });
+  // useEffect(() => {
+  //   (async () => {
+  //     const { status } = await Camera.requestCameraPermissionsAsync();
+  //     await MediaLibrary.requestCameraPermissionsAsync();
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
+  //     setHasPermission(status === "granted");
+  //   })();
+  // }, []);
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  // if (hasPermission === null) {
+  //   return <View />;
+  // }
+  // if (hasPermission === false) {
+  //   return <Text>No access to camera</Text>;
+  // }
 
-  const getLocation = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      console.log("Permission to access location was denied");
-      return;
-    }
-
-    let location = await Location.getCurrentPositionAsync({});
-    const coords = {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-    };
-    setLocation(JSON.stringify(coords));
-  };
 
   const handlePublish = () => {
-    getLocation();
     console.log(location);
-    navigation.navigate("PostScreen");
+    navigation.navigate("Home");
     console.log("Опубліковано!");
   };
 
@@ -94,7 +93,6 @@ export const CreatePostsScreen = ({ navigation }) => {
       keyboardShouldPersistTaps="handled"
       // keyboardVerticalOffset={-300}
       contentContainerStyle={styles.container}
-      onLayout={onLayoutRootView}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
@@ -143,14 +141,14 @@ export const CreatePostsScreen = ({ navigation }) => {
             <TextInput
               style={styles.input}
               value={title}
-              onChangeText={setTitle}
+             onChangeText={(text) => setTitle(text)}
               placeholder="Назва..."
             />
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.inputLocation}
-                value={location}
-                onChangeText={setLocation}
+                value={location ? JSON.stringify(location) : ''}
+                onChangeText={(value) => setLocation(JSON.stringify(value))}
                 placeholder="Місцевість..."
               />
               <Icon

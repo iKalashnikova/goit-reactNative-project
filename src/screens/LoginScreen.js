@@ -1,7 +1,5 @@
-import React, { useState, useCallback } from "react";
-import { useFonts } from "expo-font";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import * as SplashScreen from "expo-splash-screen";
 
 import {
   View,
@@ -17,9 +15,6 @@ import {
   Dimensions,
 } from "react-native";
 
-
-SplashScreen.preventAutoHideAsync();
-
 export const LoginScreen = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
@@ -30,18 +25,8 @@ export const LoginScreen = () => {
 
   const screenHeight = Dimensions.get("window").height;
 
-  const [fontsLoaded] = useFonts({
-    "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
-    "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
-  });
 
   const navigation = useNavigation();
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
 
   const handleLogin = () => {
 
@@ -71,15 +56,10 @@ export const LoginScreen = () => {
 
   Keyboard.addListener("keyboardDidShow", keyboardDidShow);
   Keyboard.addListener("keyboardDidHide", keyboardDidHide);
-
-  if (!fontsLoaded) {
-    return null;
-  }
-
   
 
   return (
-    <View style={styles.containerBack} onLayout={onLayoutRootView}>
+    <View style={styles.containerBack}>
       <Image
         source={require("../assets/images/PhotoBG.png")}
         style={styles.backgroundImage}
