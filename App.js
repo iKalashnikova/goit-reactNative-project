@@ -8,7 +8,6 @@ import Home from "./src/screens/Home";
 import { PostScreen } from "./src/screens/PostsScreen";
 import { CreatePostsScreen } from "./src/screens/CreatePostsScreen";
 import { useFonts } from "expo-font";
-import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useCallback } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
