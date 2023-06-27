@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
 import {SimpleLineIcons, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
-import { useFocusEffect } from "@react-navigation/native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -10,7 +9,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Image,
   StyleSheet,
