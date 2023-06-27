@@ -19,7 +19,6 @@ import {
   TextInput,
 } from "react-native";
 
-
 export const CreatePostsScreen = ({ navigation }) => {
   const [photo, setPhoto] = useState("");
   const [title, setTitle] = useState("");
@@ -27,10 +26,9 @@ export const CreatePostsScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [place, setPlace] = useState('');
+  const [place, setPlace] = useState("");
 
   const [permission, requestPermission] = Camera.useCameraPermissions();
-
 
   useEffect(() => {
     (async () => {
@@ -79,20 +77,19 @@ export const CreatePostsScreen = ({ navigation }) => {
   //   );
   // }
 
-
-  const takePhoto =  async () => {
+  const takePhoto = async () => {
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
       await MediaLibrary.createAssetAsync(uri);
       setPhoto(uri);
     }
-  }
+  };
 
   const deletePhoto = () => {
-    setPhoto('');
-    setTitle('');
-    setLocation('');
-    setPlace('');
+    setPhoto("");
+    setTitle("");
+    setLocation("");
+    setPlace("");
   };
 
   const handlePublish = () => {
@@ -101,7 +98,7 @@ export const CreatePostsScreen = ({ navigation }) => {
     console.log("Опубліковано!");
   };
 
-  const isFormValid = title !== "" && location !== "";
+  const isFormValid = title !== "" && location !== "" && photo !== "";
   console.log(isFormValid);
 
   return (
@@ -128,14 +125,14 @@ export const CreatePostsScreen = ({ navigation }) => {
           <View style={styles.container}>
             <View style={styles.cameraContainer}>
               <Camera style={styles.camera} type={type} ref={setCameraRef}>
-              {photo && (
-            <View style={styles.takePhotoContainer}>
-              <Image
-                style={{ width: "100%", height: "100%", borderRadius: 8 }}
-                source={{ uri: photo }}
-              />
-            </View>
-          )}
+                {photo && (
+                  <View style={styles.takePhotoContainer}>
+                    <Image
+                      style={{ width: "100%", height: "100%", borderRadius: 8 }}
+                      source={{ uri: photo }}
+                    />
+                  </View>
+                )}
                 <View style={styles.photoView}>
                   <TouchableOpacity
                     style={styles.cameraButton}
@@ -155,23 +152,24 @@ export const CreatePostsScreen = ({ navigation }) => {
                 </View>
               </Camera>
               <Text style={styles.loadText}>
-        {photo ? "Редагувати фото" : "Завантажте фото"}
-      </Text>
-          
+                {photo ? "Редагувати фото" : "Завантажте фото"}
+              </Text>
             </View>
 
             <TextInput
               style={styles.input}
               value={title}
-             onChangeText={(text) => setTitle(text)}
+              onChangeText={(text) => setTitle(text)}
               placeholder="Назва..."
             />
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.inputLocation}
-                value={location ? JSON.stringify(location) : ''}
-                onChangeText={(value) => setLocation(JSON.stringify(value))}
+                // value={location ? JSON.stringify(location) : ''}
+                // onChangeText={(value) => setLocation(JSON.stringify(value))}
                 placeholder="Місцевість..."
+                value={place}
+                onChangeText={setPlace}
               />
               <Icon
                 name="location-outline"
@@ -190,11 +188,14 @@ export const CreatePostsScreen = ({ navigation }) => {
           </View>
 
           {/* <View style={styles.mainContent}> */}
-            {/* Список користувачів */}
-            {/* Додатковий вміст */}
+          {/* Список користувачів */}
+          {/* Додатковий вміст */}
           {/* </View> */}
           <View style={styles.footer}>
-          <TouchableOpacity style={styles.trashIconWraper} onPress={deletePhoto}>
+            <TouchableOpacity
+              style={[styles.trashIconWraper, !isFormValid && styles.buttonDisabled] }
+              onPress={deletePhoto}
+            >
               <Icon
                 name="trash-outline"
                 size={24}
@@ -321,9 +322,10 @@ const styles = StyleSheet.create({
   trashIcon: {
     alignItems: "center",
     color: "#fff",
+    // backgroundColor: "#FF6C00"
   },
   trashIconWraper: {
-    backgroundColor: "#ccc",
+    backgroundColor: "#FF6C00",
     opacity: 0.5,
     width: 70,
     height: 40,
@@ -392,13 +394,13 @@ const styles = StyleSheet.create({
   },
 
   takePhotoContainer: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    borderColor: '#FFFFFF',
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    borderColor: "#FFFFFF",
     borderWidth: 1,
   },
-  
+
   loadText: {
     fontSize: 16,
     color: "#ccc",
