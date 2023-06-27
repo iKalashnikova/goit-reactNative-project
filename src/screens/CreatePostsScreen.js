@@ -27,6 +27,7 @@ export const CreatePostsScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [place, setPlace] = useState('');
 
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
@@ -79,7 +80,20 @@ export const CreatePostsScreen = ({ navigation }) => {
   // }
 
 
+  const takePhoto =  async () => {
+    if (cameraRef) {
+      const { uri } = await cameraRef.takePictureAsync();
+      await MediaLibrary.createAssetAsync(uri);
+      setPhoto(uri);
+    }
+  }
 
+  const deletePhoto = () => {
+    setPhoto('');
+    setTitle('');
+    setLocation('');
+    setPlace('');
+  };
 
   const handlePublish = () => {
     console.log(location);
@@ -114,15 +128,18 @@ export const CreatePostsScreen = ({ navigation }) => {
           <View style={styles.container}>
             <View style={styles.cameraContainer}>
               <Camera style={styles.camera} type={type} ref={setCameraRef}>
+              {photo && (
+            <View style={styles.takePhotoContainer}>
+              <Image
+                style={{ width: "100%", height: "100%", borderRadius: 8 }}
+                source={{ uri: photo }}
+              />
+            </View>
+          )}
                 <View style={styles.photoView}>
                   <TouchableOpacity
                     style={styles.cameraButton}
-                    onPress={async () => {
-                      if (cameraRef) {
-                        const { uri } = await cameraRef.takePictureAsync();
-                        await MediaLibrary.createAssetAsync(uri);
-                      }
-                    }}
+                    onPress={takePhoto}
                   >
                     <View style={styles.takePhotoOut}>
                       <View>
@@ -137,8 +154,10 @@ export const CreatePostsScreen = ({ navigation }) => {
                   </TouchableOpacity>
                 </View>
               </Camera>
-
-              <Text style={styles.loadText}>Завантажте фото</Text>
+              <Text style={styles.loadText}>
+        {photo ? "Редагувати фото" : "Завантажте фото"}
+      </Text>
+          
             </View>
 
             <TextInput
@@ -175,14 +194,14 @@ export const CreatePostsScreen = ({ navigation }) => {
             {/* Додатковий вміст */}
           {/* </View> */}
           <View style={styles.footer}>
-            <View style={styles.trashIconWraper}>
+          <TouchableOpacity style={styles.trashIconWraper} onPress={deletePhoto}>
               <Icon
                 name="trash-outline"
                 size={24}
                 color="#000"
                 style={styles.trashIcon}
               />
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -371,6 +390,15 @@ const styles = StyleSheet.create({
     left: -12,
     color: "white",
   },
+
+  takePhotoContainer: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    borderColor: '#FFFFFF',
+    borderWidth: 1,
+  },
+  
   loadText: {
     fontSize: 16,
     color: "#ccc",
