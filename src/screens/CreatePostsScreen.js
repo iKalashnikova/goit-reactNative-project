@@ -47,21 +47,6 @@ export const CreatePostsScreen = ({ navigation }) => {
     })();
   }, []);
 
-  // if (!permission) {
-  //   // Camera permissions are still loading
-  //   return <View />;
-  // }
-
-  // if (!permission.granted) {
-  //   // Camera permissions are not granted yet
-  //   return (
-  //     <View style={styles.container}>
-  //       <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-  //       <Button onPress={requestPermission} title="grant permission" />
-  //     </View>
-  //   );
-  // }
-
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -78,10 +63,27 @@ export const CreatePostsScreen = ({ navigation }) => {
     return <Text>No access to camera</Text>;
   }
 
+  // if (!permission) {
+  //   // Camera permissions are still loading
+  //   return <View />;
+  // }
+
+  // if (!permission.granted) {
+  //   // Camera permissions are not granted yet
+  //   return (
+  //     <View style={styles.container}>
+  //       <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+  //       <Button onPress={requestPermission} title="grant permission" />
+  //     </View>
+  //   );
+  // }
+
+
+
 
   const handlePublish = () => {
     console.log(location);
-    navigation.navigate("Home");
+    navigation.navigate("PostScreen");
     console.log("Опубліковано!");
   };
 
