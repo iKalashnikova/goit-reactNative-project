@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Ionicons";
+// import Icon from "react-native-vector-icons/Ionicons";
+import { AntDesign } from '@expo/vector-icons';
 // import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 
@@ -86,14 +87,12 @@ export const RegistrationScreen = () => {
               <TouchableOpacity
               //   onPress={handleImageUpload}
               >
-                <View style={styles.plusIconWrapper}>
-                  <Icon
-                    name="add-outline"
+                  <AntDesign
+                    name="pluscircleo"
                     size={24}
                     color="#FF6C00"
                     style={styles.plusIcon}
                   />
-                </View>
               </TouchableOpacity>
             </View>
             <Text style={styles.registrationText}>Реєстрація</Text>
@@ -244,23 +243,13 @@ const styles = StyleSheet.create({
   profileImage: {
     position: "relative",
   },
-  plusIconWrapper: {
+  plusIcon: {
     position: "absolute",
     width: 25,
     height: 25,
-    left: 110,
+    left: 112,
     top: 80,
-    backgroundColor: "#FFFFFF",
-    borderWidth: 1,
-    borderRadius: 50,
-    borderColor: "#FF6C00",
-    justifyContent: "center",
-    alignItems: "center",
     fill: "#FF6C00",
-  },
-  plusIcon: {
-    marginTop: -1,
-    marginLeft: 1,
   },
   showPasswordButton: {
     position: "absolute",

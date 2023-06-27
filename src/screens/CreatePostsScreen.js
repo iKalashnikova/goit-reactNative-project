@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import Icon from "react-native-vector-icons/Ionicons";
+import {SimpleLineIcons, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
 import { useFocusEffect } from "@react-navigation/native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
@@ -116,7 +116,7 @@ export const CreatePostsScreen = ({ navigation }) => {
               <TouchableOpacity
               // onPress={back}
               >
-                <Icon name="arrow-back-outline" size={24} color="#000" />
+                <MaterialIcons name="arrow-back" size={24} color="#000" />
               </TouchableOpacity>
               <Text style={styles.headerText}>Створити Публікацію</Text>
             </View>
@@ -140,8 +140,8 @@ export const CreatePostsScreen = ({ navigation }) => {
                   >
                     <View style={styles.takePhotoOut}>
                       <View>
-                        <Icon
-                          name="camera"
+                        <MaterialIcons
+                          name="photo-camera"
                           size={24}
                           color="white"
                           style={styles.takePhoto}
@@ -171,8 +171,8 @@ export const CreatePostsScreen = ({ navigation }) => {
                 value={place}
                 onChangeText={setPlace}
               />
-              <Icon
-                name="location-outline"
+              <SimpleLineIcons
+                name="location-pin"
                 size={24}
                 color="#000"
                 style={styles.icon}
@@ -196,8 +196,8 @@ export const CreatePostsScreen = ({ navigation }) => {
               style={[styles.trashIconWraper, !isFormValid && styles.buttonDisabled] }
               onPress={deletePhoto}
             >
-              <Icon
-                name="trash-outline"
+              <MaterialCommunityIcons
+                name="trash-can-outline"
                 size={24}
                 color="#000"
                 style={styles.trashIcon}
